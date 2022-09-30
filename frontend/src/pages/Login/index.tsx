@@ -12,7 +12,7 @@ function initialFormValues () {
 export function Login () {
   const [values, setValues] = useState(initialFormValues)
   const [loginRequestStatus, setLoginRequestStatus] = useState('success')
-  const { signIn } = useContext(AuthContext)
+  const { signIn, errMsg } = useContext(AuthContext)
 
   function handleChange (e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target
@@ -40,6 +40,9 @@ export function Login () {
 
   return (
     <div>
+      <div>
+        <p>{errMsg}</p>
+      </div>
       <form
         noValidate
         data-testid="login-form"

@@ -20,9 +20,11 @@ interface SignInCredentials {
 interface AuthContextData {
   signIn: (credentials: SignInCredentials) => Promise<void | AxiosError>
   signOut: () => void
+  register: (credentials: SignInCredentials) => Promise<void | AxiosError>
   user: User
   isAuthenticated: boolean
   loadingUserData: boolean
+  errMsg: string
 }
 
 interface AuthProviderProps {
@@ -39,6 +41,7 @@ export function AuthProvider ({ children }: AuthProviderProps) {
   const token = getToken()
   const isAuthenticated = Boolean(token)
   const userData = user as User
+  const [errMsg, setErrMsg] = useState('')
 
   async function signIn ({ email, password }: SignInCredentials) {
     try {
@@ -50,6 +53,25 @@ export function AuthProvider ({ children }: AuthProviderProps) {
       setAuthorizationHeader(api.defaults, access)
     } catch (error) {
       const err = error as AxiosError
+      const errorMessage = err.response?.data.detail
+      setErrMsg(errorMessage)
+      console.log(errorMessage)
+      return err
+    }
+  }
+  async function register ({ email, password }: SignInCredentials) {
+    try {
+      const response = await api.post('/register/', { email, password })
+      const { access, refresh, permissions, roles } = response.data
+
+      createTokenCookies(access, refresh)
+      setUser({ email, permissions, roles })
+      setAuthorizationHeader(api.defaults, access)
+    } catch (error) {
+      const err = error as AxiosError
+      const errorMessage = err.response?.data.detail
+      setErrMsg(errorMessage)
+      console.log(register)
       return err
     }
   }
@@ -97,7 +119,9 @@ export function AuthProvider ({ children }: AuthProviderProps) {
       user: userData,
       loadingUserData,
       signIn,
-      signOut
+      signOut,
+      register,
+      errMsg
     }}>
       {children}
     </AuthContext.Provider>
