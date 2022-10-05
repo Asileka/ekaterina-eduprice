@@ -1,4 +1,6 @@
 import React, { FormEvent, useContext, useEffect, useState } from 'react'
+import Alert from 'react-bootstrap/Alert'
+import { Link } from 'react-router-dom'
 
 import { AuthContext } from '../../context/AuthContext'
 
@@ -41,7 +43,15 @@ export function Login () {
   return (
     <div>
       <div>
-        <p>{errMsg}</p>
+        <h1>Welcome back!</h1>
+        <p>You can sign in with your existing account</p>
+      </div>
+      <div>
+        {(errMsg) && (
+        <Alert key={'warning'} variant={'warning'}>
+        {errMsg}
+      </Alert>
+        )}
       </div>
       <form
         noValidate
@@ -82,6 +92,8 @@ export function Login () {
           {loginRequestStatus === 'loading' ? 'Loading...' : 'Submit'}
         </button>
       </form>
+      <p>New here?</p>
+      <Link to="/register">Please register</Link>
     </div>
   )
 }

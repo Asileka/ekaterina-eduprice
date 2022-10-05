@@ -25,6 +25,9 @@ interface AuthContextData {
   isAuthenticated: boolean
   loadingUserData: boolean
   errMsg: string
+  errMsg2: string
+  errEmail: string[]
+  errPassword: string[]
 }
 
 interface AuthProviderProps {
@@ -42,6 +45,9 @@ export function AuthProvider ({ children }: AuthProviderProps) {
   const isAuthenticated = Boolean(token)
   const userData = user as User
   const [errMsg, setErrMsg] = useState('')
+  const [errMsg2, setErrMsg2] = useState('')
+  const [errEmail, setErrEmail] = useState([])
+  const [errPassword, setErrPassword] = useState([])
 
   async function signIn ({ email, password }: SignInCredentials) {
     try {
@@ -69,9 +75,16 @@ export function AuthProvider ({ children }: AuthProviderProps) {
       setAuthorizationHeader(api.defaults, access)
     } catch (error) {
       const err = error as AxiosError
-      const errorMessage = err.response?.data.detail
-      setErrMsg(errorMessage)
-      console.log(register)
+      let errorMessage = ''
+
+      if (err.response?.status === 400) {
+        errorMessage = ('There are invalid fields, please fix the errors bellow')
+      } else {
+        errorMessage = err.response?.data.detail
+      }
+      setErrEmail(err.response?.data.email)
+      setErrPassword(err.response?.data.password)
+      setErrMsg2(errorMessage)
       return err
     }
   }
@@ -121,7 +134,10 @@ export function AuthProvider ({ children }: AuthProviderProps) {
       signIn,
       signOut,
       register,
-      errMsg
+      errMsg,
+      errMsg2,
+      errEmail,
+      errPassword
     }}>
       {children}
     </AuthContext.Provider>
