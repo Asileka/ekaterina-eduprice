@@ -87,8 +87,7 @@ export function Login () {
         {loginRequestStatus === 'loading' ? 'Loading...' : 'Submit'}
       </Button>
       </Form>
-      <p>New here?</p>
-      <Link to="/register">Please register</Link>
+      <p>New here? <Link to="/register">Please register</Link></p>
     </div>
   )
 }

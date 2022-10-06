@@ -50,7 +50,7 @@ export function Register () {
             data-testid="registration-input-email"
             onChange={handleChange}
             />
-            {(errEmail.length >= 0) &&
+            {(errEmail && errEmail.length >= 0) &&
           errEmail.map((errMessage) => (
               <p key='errEmail' style={{ color: 'red' }}>
               {errMessage}
@@ -68,7 +68,7 @@ export function Register () {
         value={values.password}
         onChange={handleChange}
         />
-         {(errPassword.length >= 0) && (
+         {(errPassword && errPassword.length >= 0) && (
            errPassword.map((errMessage) => (
         <p key='errPassword' style={{ color: 'red' }}>
        {errMessage}
@@ -79,8 +79,7 @@ export function Register () {
         Submit
       </Button>
       </Form>
-      <p>Already have an account?</p>
-      <Link to="/login">Login here</Link>
+      <p>Already have an account? <Link to="/login">Login here</Link></p>
     </div>
   )
 }
