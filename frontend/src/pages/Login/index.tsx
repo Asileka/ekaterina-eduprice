@@ -1,5 +1,7 @@
 import React, { FormEvent, useContext, useEffect, useState } from 'react'
 import Alert from 'react-bootstrap/Alert'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 import { Link } from 'react-router-dom'
 
 import { AuthContext } from '../../context/AuthContext'
@@ -53,45 +55,38 @@ export function Login () {
       </Alert>
         )}
       </div>
-      <form
+      <Form
         noValidate
         data-testid="login-form"
         onSubmit={handleSubmit}
       >
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            value={values.email}
-            type="email"
-            name="email"
-            id="email"
-            data-testid="login-input-email"
-            disabled={loginRequestStatus === 'loading'}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            value={values.password}
-            type="password"
-            name="password"
-            id="password"
-            data-testid="login-input-password"
-            disabled={loginRequestStatus === 'loading'}
-            onChange={handleChange}
-          />
-        </div>
-
-        <button
-          type="submit"
-          data-testid="login-submit-button"
-          disabled={loginRequestStatus === 'loading'}
-        >
-          {loginRequestStatus === 'loading' ? 'Loading...' : 'Submit'}
-        </button>
-      </form>
+        <Form.Group className="mb-3" controlId="emailForm">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control
+        type="email"
+        placeholder="email"
+        name="email"
+        data-testid="login-input-email"
+        disabled={loginRequestStatus === 'loading'}
+        value={values.email}
+        onChange={handleChange}/>
+      </Form.Group>
+        <Form.Group className="mb-3" controlId="passwordForm">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+        type="password"
+        placeholder="password"
+        name="password"
+        data-testid="login-input-password"
+        disabled={loginRequestStatus === 'loading'}
+        value={values.password}
+        onChange={handleChange}/>
+      </Form.Group>
+        <Button variant="primary" type="submit" data-testid="login-submit-button"
+          disabled={loginRequestStatus === 'loading'}>
+        {loginRequestStatus === 'loading' ? 'Loading...' : 'Submit'}
+      </Button>
+      </Form>
       <p>New here?</p>
       <Link to="/register">Please register</Link>
     </div>

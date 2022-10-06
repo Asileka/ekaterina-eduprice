@@ -1,5 +1,7 @@
 import React, { useState, FormEvent, useContext } from 'react'
 import Alert from 'react-bootstrap/Alert'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 import { Link } from 'react-router-dom'
 
 import { AuthContext } from '../../context/AuthContext'
@@ -33,58 +35,50 @@ export function Register () {
       </Alert>
       )}
       <h1>Register</h1>
-      <form
+      <Form
         noValidate
         data-testid="registration-form"
         onSubmit={handleSubmit}
       >
-         <div>
-          <label htmlFor="email">Email</label>
-          <input
-            value={values.email}
+        <Form.Group className="mb-3" controlId="emailForm">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control
+      value={values.email}
             type="email"
+            placeholder="email"
             name="email"
-            id="email"
-            data-testid="login-input-email"
+            data-testid="registration-input-email"
             onChange={handleChange}
-          />
-        </div>
-        <div>
-        {(errEmail.length >= 0) &&
+            />
+            {(errEmail.length >= 0) &&
           errEmail.map((errMessage) => (
-              <Alert key='danger' variant='danger'>
+              <p key='errEmail' style={{ color: 'red' }}>
               {errMessage}
-              </Alert>
+              </p>
           ))
       }
-      </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            value={values.password}
-            type="password"
-            name="password"
-            id="password"
-            data-testid="login-input-password"
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-        {(errPassword.length >= 0) && (
-          errPassword.map((errMessage) => (
-        <Alert key='danger' variant='danger'>
+      </Form.Group>
+        <Form.Group className="mb-3" controlId="passwordForm">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+        type="password"
+        placeholder="password"
+        name="password"
+        data-testid="registration-input-password"
+        value={values.password}
+        onChange={handleChange}
+        />
+         {(errPassword.length >= 0) && (
+           errPassword.map((errMessage) => (
+        <p key='errPassword' style={{ color: 'red' }}>
        {errMessage}
-        </Alert>
-          )))}
-      </div>
-        <button
-          type="submit"
-          data-testid="registration-submit-button"
-          disabled= {false}
-        >
-         Submit
-        </button>
-      </form>
+        </p>
+           )))}
+      </Form.Group>
+        <Button variant="primary" type="submit" data-testid="registration-submit-button">
+        Submit
+      </Button>
+      </Form>
       <p>Already have an account?</p>
       <Link to="/login">Login here</Link>
     </div>

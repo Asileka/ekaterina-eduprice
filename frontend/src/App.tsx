@@ -1,3 +1,4 @@
+import { Container, Row, Col } from 'react-bootstrap'
 import { BrowserRouter } from 'react-router-dom'
 
 import { NavBar } from './components/NavBar'
@@ -15,7 +16,13 @@ const App = () => (
   <BrowserRouter>
     <AuthProvider>
       <NavBar />
-      <RouteList />
+      <Container>
+        <Row>
+          <Col>
+            <RouteList />
+          </Col>
+        </Row>
+      </Container>
     </AuthProvider>
   </BrowserRouter>
 )
