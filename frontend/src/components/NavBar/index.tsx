@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-// import Button from 'react-bootstrap/Button'
+import { Button } from 'react-bootstrap'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
@@ -32,24 +32,28 @@ export function NavBar () {
       )} */}
           <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">Eduprise</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">Home</Nav.Link>
+          {!isAuthenticated && (<>
             <Nav.Link as={Link} to="/login">Login</Nav.Link>
+            <Nav.Link as={Link} to="/register">Register</Nav.Link>
+            </>)}
       <CanAccess permissions={['users.list']}>
         <Nav.Link as={Link} to="/users">Users</Nav.Link>
       </CanAccess>
-
-      <CanAccess permissions={['metrics.list']}>
+      {isAuthenticated && (
+        <>
+        <Nav.Link as={Link} to="/">Dashboard</Nav.Link>
         <Nav.Link as={Link} to="/metrics">Metrics</Nav.Link>
-      </CanAccess>
+        </>
+      )}
           </Nav>
           {isAuthenticated && (
         <>
           <span>{user?.email}</span>
-          <button data-testid="logout-button" onClick={() => signOut()}>Logout</button>
+          <Button size="sm" variant="outline-primary" data-testid="logout-button" onClick={() => signOut()}>Logout</Button>
         </>
           )}
         </Navbar.Collapse>

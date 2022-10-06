@@ -2,7 +2,7 @@ import { ReactNode, useContext } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { AuthContext } from '../context/AuthContext'
-import { validateUserPermissions } from '../utils/validateUserPermissions'
+// import { validateUserPermissions } from '../utils/validateUserPermissions'
 
 interface IPrivateRoute {
   permissions?: string[]
@@ -17,8 +17,8 @@ export function PrivateRoute ({
   redirectTo = '/login',
   children
 }: IPrivateRoute) {
-  const { isAuthenticated, user, loadingUserData } = useContext(AuthContext)
-  const { hasAllPermissions } = validateUserPermissions({ user, permissions, roles })
+  const { isAuthenticated, loadingUserData } = useContext(AuthContext)
+  // const { hasAllPermissions } = validateUserPermissions({ user, permissions, roles })
 
   if (loadingUserData) {
     return null
@@ -28,9 +28,9 @@ export function PrivateRoute ({
     return <Navigate to={redirectTo} />
   }
 
-  if (!hasAllPermissions) {
-    return <Navigate to="/" />
-  }
+  // if (!hasAllPermissions) {
+  //   return <Navigate to="/" />
+  // }
 
   return <>{children}</>
 }
