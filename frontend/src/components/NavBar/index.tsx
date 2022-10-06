@@ -45,14 +45,13 @@ export function NavBar () {
       <CanAccess permissions={['metrics.list']}>
         <Nav.Link as={Link} to="/metrics">Metrics</Nav.Link>
       </CanAccess>
-
-      {isAuthenticated && (
+          </Nav>
+          {isAuthenticated && (
         <>
           <span>{user?.email}</span>
           <button data-testid="logout-button" onClick={() => signOut()}>Logout</button>
         </>
-      )}
-          </Nav>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>
