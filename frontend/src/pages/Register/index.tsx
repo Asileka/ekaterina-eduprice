@@ -1,7 +1,10 @@
 import React, { useState, FormEvent, useContext } from 'react'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
+import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
+import Row from 'react-bootstrap/Row'
 import { Link } from 'react-router-dom'
 
 import { AuthContext } from '../../context/AuthContext'
@@ -28,13 +31,21 @@ export function Register () {
     await register(values)
   }
   return (
-    <div>
+    <Row className="align-items-center">
+      <Col lg="7">
+      <div className="text-center">
+          <h1 style={{ fontSize: '3em' }}>Create a free account</h1>
+          <p style={{ color: 'gray' }}>And get access to all the user metrics straight away!</p>
+        </div>
+        </Col>
+        <Col lg="5" className="mt-5">
+        <Card body>
+        <h3>Register</h3>
       {(errMsg2) && (
         <Alert key={'warning'} variant={'warning'}>
         {errMsg2}
       </Alert>
       )}
-      <h1>Register</h1>
       <Form
         noValidate
         data-testid="registration-form"
@@ -75,11 +86,15 @@ export function Register () {
         </p>
            )))}
       </Form.Group>
+      <div className="d-grid gap-2">
         <Button variant="primary" type="submit" data-testid="registration-submit-button">
         Submit
       </Button>
+      </div>
       </Form>
       <p>Already have an account? <Link to="/login">Login here</Link></p>
-    </div>
+      </Card>
+      </Col>
+    </Row>
   )
 }

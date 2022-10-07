@@ -30,7 +30,7 @@ export function NavBar () {
           <button data-testid="logout-button" onClick={() => signOut()}>Logout</button>
         </>
       )} */}
-          <Navbar bg="light" expand="lg">
+          <Navbar bg="light" variant='light' expand="lg">
       <Container>
         <Navbar.Brand as={Link} to="/">Eduprise</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -52,7 +52,9 @@ export function NavBar () {
           </Nav>
           {isAuthenticated && (
         <>
-          <span>{user?.email}</span>
+        <Navbar.Text className='me-2'>
+            Signed in as: {user?.email}
+          </Navbar.Text>
           <Button size="sm" variant="outline-primary" data-testid="logout-button" onClick={() => signOut()}>Logout</Button>
         </>
           )}
