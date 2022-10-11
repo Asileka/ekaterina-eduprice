@@ -5,6 +5,7 @@ WORKDIR /app
 # Install dependencies
 COPY package.json /app
 
+RUN yarn global add sass
 RUN yarn install
 
 COPY . .
