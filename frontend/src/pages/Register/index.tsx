@@ -16,7 +16,7 @@ export function Register () {
     }
   }
   const [values, setValues] = useState(initialFormValues)
-  const { register, errMsg2, errEmail, errPassword } = useContext(AuthContext)
+  const { register, errMsg2, errEmail, errPassword, successMsg } = useContext(AuthContext)
   function handleChange (e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target
 
@@ -46,6 +46,11 @@ export function Register () {
         {errMsg2}
       </Alert>
       )}
+       {(successMsg) && (
+        <Alert key={'success'} variant={'success'}>
+        {successMsg}
+      </Alert>
+       )}
       <Form
         noValidate
         data-testid="registration-form"

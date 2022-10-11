@@ -28,6 +28,7 @@ interface AuthContextData {
   errMsg2: string
   errEmail: string[]
   errPassword: string[]
+  successMsg: string
 }
 
 interface AuthProviderProps {
@@ -48,6 +49,7 @@ export function AuthProvider ({ children }: AuthProviderProps) {
   const [errMsg2, setErrMsg2] = useState('')
   const [errEmail, setErrEmail] = useState([])
   const [errPassword, setErrPassword] = useState([])
+  const [successMsg, setSuccessMsg] = useState('')
 
   async function signIn ({ email, password }: SignInCredentials) {
     try {
@@ -68,11 +70,13 @@ export function AuthProvider ({ children }: AuthProviderProps) {
   async function register ({ email, password }: SignInCredentials) {
     try {
       const response = await api.post('/register/', { email, password })
-      const { access, refresh, permissions, roles } = response.data
+      // const { access, refresh } = response.data
 
-      createTokenCookies(access, refresh)
-      setUser({ email, permissions, roles })
-      setAuthorizationHeader(api.defaults, access)
+      // createTokenCookies(access, refresh)
+      // setUser({ email, permissions, roles })
+      // setAuthorizationHeader(api.defaults, access)
+      // console.log(response.data)
+      if (response) { setSuccessMsg('Thank you for registering! You can now Log In') }
     } catch (error) {
       const err = error as AxiosError
       let errorMessage = ''
@@ -137,7 +141,8 @@ export function AuthProvider ({ children }: AuthProviderProps) {
       errMsg,
       errMsg2,
       errEmail,
-      errPassword
+      errPassword,
+      successMsg
     }}>
       {children}
     </AuthContext.Provider>
